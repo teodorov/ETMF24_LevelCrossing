@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global cdeclarations here.
+chan open, close;
+chan enter, leave;
+</declaration>
+	<template>
+		<name>EBarrier</name>
+		<location id="id0" x="0" y="0">
+		</location>
+		<init ref="id0"/>
+		<transition id="id1">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-101" y="-59">close!</label>
+			<nail x="-42" y="-51"/>
+			<nail x="-119" y="-34"/>
+			<nail x="-68" y="68"/>
+		</transition>
+		<transition id="id2">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="18" y="12">open!</label>
+			<nail x="17" y="-25"/>
+			<nail x="76" y="-25"/>
+			<nail x="76" y="59"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">Barrier</name>
+		<declaration>// Place local declarations here.
+clock time;</declaration>
+		<location id="id3" x="-272" y="-306">
+			<name x="-282" y="-340">opened</name>
+		</location>
+		<location id="id4" x="-76" y="68">
+			<name x="-86" y="34">closed</name>
+		</location>
+		<location id="id5" x="-272" y="-119">
+			<name x="-348" y="-127">raising</name>
+		</location>
+		<location id="id6" x="-76" y="-119">
+			<name x="-59" y="-127">lowering</name>
+		</location>
+		<location id="id7" x="-76" y="-25">
+			<name x="-59" y="-34">l2c</name>
+		</location>
+		<location id="id8" x="-272" y="-212">
+			<name x="-314" y="-221">r2o</name>
+		</location>
+		<init ref="id3"/>
+		<transition id="id9">
+			<source ref="id8"/>
+			<target ref="id3"/>
+		</transition>
+		<transition id="id10">
+			<source ref="id5"/>
+			<target ref="id8"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id7"/>
+			<target ref="id4"/>
+		</transition>
+		<transition id="id12">
+			<source ref="id6"/>
+			<target ref="id7"/>
+		</transition>
+		<transition id="id13">
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-255" y="-136">close?</label>
+		</transition>
+		<transition id="id14">
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-255" y="-25">open?</label>
+		</transition>
+		<transition id="id15">
+			<source ref="id3"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-178" y="-246">close?</label>
+		</transition>
+	</template>
+	<template>
+		<name>ETrackCircuit</name>
+		<location id="id16" x="0" y="0">
+		</location>
+		<init ref="id16"/>
+		<transition id="id17">
+			<source ref="id16"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="-50" y="0">enter?</label>
+			<nail x="-59" y="-51"/>
+			<nail x="-68" y="34"/>
+		</transition>
+		<transition id="id18">
+			<source ref="id16"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="18" y="4">leave?</label>
+			<nail x="8" y="-8"/>
+			<nail x="68" y="-68"/>
+			<nail x="76" y="42"/>
+		</transition>
+	</template>
+	<template>
+		<name>TrackCircuit</name>
+		<parameter>chan &amp;toOn</parameter>
+		<declaration>clock time;</declaration>
+		<location id="id19" x="0" y="0">
+			<name x="-10" y="-34">far</name>
+		</location>
+		<location id="id20" x="8" y="221">
+			<name x="-2" y="187">on</name>
+		</location>
+		<location id="id21" x="272" y="221">
+			<name x="229" y="187">left</name>
+		</location>
+		<location id="id22" x="-238" y="221">
+			<name x="-229" y="187">close</name>
+		</location>
+		<init ref="id19"/>
+		<transition id="id23">
+			<source ref="id21"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="187" y="8">leave!</label>
+			<nail x="272" y="0"/>
+		</transition>
+		<transition id="id24">
+			<source ref="id20"/>
+			<target ref="id21"/>
+		</transition>
+		<transition id="id25">
+			<source ref="id22"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-153" y="229">toOn!</label>
+		</transition>
+		<transition id="id26">
+			<source ref="id19"/>
+			<target ref="id22"/>
+			<label kind="synchronisation" x="-230" y="4">enter!</label>
+			<nail x="-238" y="0"/>
+		</transition>
+	</template>
+	<template>
+		<name>P12Observer</name>
+		<parameter>chan &amp;toOn</parameter>
+		<declaration>clock time;</declaration>
+		<location id="id27" x="0" y="0">
+		</location>
+		<location id="id28" x="0" y="170">
+			<name x="-10" y="136">reject</name>
+		</location>
+		<init ref="id27"/>
+		<transition id="id29">
+			<source ref="id27"/>
+			<target ref="id28"/>
+			<label kind="guard" x="8" y="76">time &lt;= 20</label>
+			<label kind="synchronisation" x="8" y="59">toOn?</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id27"/>
+			<target ref="id27"/>
+			<label kind="synchronisation" x="68" y="-34">toOn?</label>
+			<label kind="assignment" x="68" y="-17">time = 0</label>
+			<nail x="59" y="-68"/>
+			<nail x="59" y="34"/>
+		</transition>
+	</template>
+	<template>
+		<name>Controller</name>
+		<location id="id31" x="0" y="0">
+		</location>
+		<location id="id32" x="144" y="0">
+			<committed/>
+		</location>
+		<location id="id33" x="-144" y="0">
+			<committed/>
+		</location>
+		<init ref="id31"/>
+		<transition id="id34">
+			<source ref="id33"/>
+			<target ref="id31"/>
+			<label kind="synchronisation" x="-144" y="25">close!</label>
+			<nail x="-144" y="76"/>
+		</transition>
+		<transition id="id35">
+			<source ref="id31"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-93" y="-17">enter?</label>
+		</transition>
+		<transition id="id36">
+			<source ref="id32"/>
+			<target ref="id31"/>
+			<label kind="synchronisation" x="102" y="25">open!</label>
+			<nail x="144" y="85"/>
+		</transition>
+		<transition id="id37">
+			<source ref="id31"/>
+			<target ref="id32"/>
+			<label kind="synchronisation" x="51" y="-17">leave?</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+ebarrier = EBarrier();
+barrier = Barrier();
+
+chan toOn1, toOn2;
+etrackCircuit = ETrackCircuit();
+
+trackCircuit = TrackCircuit(toOn1);
+observer = P12Observer(toOn1);
+
+trackCircuit1 = TrackCircuit(toOn2);
+observer1 = P12Observer(toOn2);
+
+controller = Controller();
+
+system ebarrier, barrier;
+//system etrackCircuit, trackCircuit, observer;
+//system barrier, trackCircuit, controller, observer;
+//system barrier, trackCircuit, trackCircuit1, controller, observer, observer2;</system>
+	<queries>
+		<option key="--state-representation" value="1"/>
+		<option key="--diagnostic" value="-1"/>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;barrier.closed</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;barrier.opened</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>barrier.lowering --&gt; barrier.closed</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>A[] barrier.lowering imply barrier.time &gt;= 0 &amp;&amp; barrier.time &lt;= 20</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>A[] barrier.l2c imply barrier.time &gt;= 10 &amp;&amp; barrier.time &lt;= 20</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>barrier.raising --&gt; barrier.opened || barrier.lowering</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+		<query>
+			<formula>A[] barrier.r2o imply barrier.time &gt;= 10 &amp;&amp; barrier.time &lt;= 20</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-12-02 21:09:46 -0300">
+				<option key="--state-representation" value="1"/>
+				<option key="--diagnostic" value="-1"/>
+			</result>
+		</query>
+	</queries>
+</nta>
